@@ -1,8 +1,3 @@
-/*
- * Classe pour gÃ©nÃ©rer un fichier au format XML
- * @version Mai 2016.
- * @author Thierry Baribaud.
- */
 package utils;
 
 import java.io.File;
@@ -18,31 +13,40 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Classe pour générer un fichier au format XML.
+ *
+ * @version Juin 2016
+ * @author Thierry Baribaud
+ */
 public class XMLDocument {
 
     /**
-     * MyDocument : rÃ©fÃ©rence au document XML.
+     * Référence au document XML.
      */
     protected Document MyDocument;
 
     /**
-     * MyElements : Liste des Ã©lÃ©ments Ã  exporter.
+     * Liste des éléments à exporter.
      */
     protected Element MyElements;
 
     /**
-     * Initialise le document XML.
+     * Initialise le document XML - constructeur principal.
      *
-     * @param RootName nom de la racine du document XML
-     * @param XsdFile nom du fichier contenant le schema XML
+     * @param RootName nom de la racine du document XML.
+     * @param XsdFile nom du fichier contenant le schéma XML.
+     * @param GeneralComment commentaire sur le contenu du fichier.
      */
-    public XMLDocument(String RootName, String XsdFile) {
+    public XMLDocument(String RootName, String XsdFile, String GeneralComment) {
 
         DocumentBuilderFactory MyFactory;
         DocumentBuilder MyBuilder;
+        Comment MyComment;
 
         MyFactory = DocumentBuilderFactory.newInstance();
         try {
@@ -55,6 +59,11 @@ public class XMLDocument {
             MyElements.setAttribute("xsi:noNamespaceSchemaLocation", XsdFile);
             MyDocument.appendChild(MyElements);
 
+            if (GeneralComment != null) {
+                MyComment = MyDocument.createComment(GeneralComment);
+                MyElements.appendChild(MyComment);
+            }
+
         } catch (ParserConfigurationException MyException) {
             Logger.getLogger(XMLDocument.class.getName()).log(Level.SEVERE, null, MyException);
             System.out.println("Problem creating XML document " + MyException);
@@ -62,12 +71,22 @@ public class XMLDocument {
     }
 
     /**
-     * Pensez Ã  rajouter une methode pour enrichir le document XML.
+     * Initialise le document XML - constructeur secondaire.
+     *
+     * @param RootName nom de la racine du document XML.
+     * @param XsdFile nom du fichier contenant le schéma XML.
+     */
+    public XMLDocument(String RootName, String XsdFile) {
+        this(RootName, XsdFile, null);
+    }
+
+    /**
+     * Pensez à rajouter une methode pour enrichir le document XML.
      */
     /**
      * Finalise le document XML.
      *
-     * @param FileOut nom du fichier qui recevra les rÃ©sultats.
+     * @param FileOut le nom du fichier qui recevra les résultats.
      */
     public void FinalizeXMLDocument(String FileOut) {
 
@@ -98,7 +117,7 @@ public class XMLDocument {
             // Output
             MyTransformer.transform(MySource, MyOutput);
 
-            System.out.println("Fichier des rÃ©sultats : " + FileOut);
+            System.out.println("Fichier des résultats : " + FileOut);
         } catch (TransformerConfigurationException MyException) {
             Logger.getLogger(XMLDocument.class.getName()).log(Level.SEVERE, null, MyException);
             System.out.println("Problem configuring XML document " + MyException);

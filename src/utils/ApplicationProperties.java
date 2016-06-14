@@ -15,7 +15,7 @@ public class ApplicationProperties extends Properties {
 
   /**
    * @param FileName the name of the file containing application properties.
-   * @throws java.io.IOException
+   * @throws java.io.IOException en cas d'erreur d'entrée/sortie.
    */
   public ApplicationProperties(String FileName) throws IOException {
     FileInputStream MyFileInputStream;

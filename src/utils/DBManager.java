@@ -19,8 +19,8 @@ public class DBManager {
   /**
    * Class builder.
    * @param MyDBServer Database server to connect to.
-   * @throws ClassNotFoundException
-   * @throws java.sql.SQLException
+   * @throws ClassNotFoundException en cas de classe non trouvée.
+   * @throws java.sql.SQLException en cas d'erreur SQL.
    */
   public DBManager(DBServer MyDBServer)
     throws ClassNotFoundException, SQLException {

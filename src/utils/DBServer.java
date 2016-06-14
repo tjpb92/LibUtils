@@ -64,7 +64,7 @@ public class DBServer {
   * DBServer builder.
   * @param ServerType type of server : dev/prod.
   * @param MyApplicationProperties Application properties.
-  * @throws DBServerException
+  * @throws DBServerException en cas d'erreur sur le serveur de base de données.
   */
   public DBServer (String ServerType, ApplicationProperties MyApplicationProperties) 
     throws DBServerException {
@@ -323,10 +323,10 @@ public class DBServer {
   }
   
   /**
-  * Displays current values
+  * Displays current values.
+  * 
   * For security reason, password is displayed as ********.
   * @return current values as a string.
-  * @Override
   */
   @Override
   public String toString() {
