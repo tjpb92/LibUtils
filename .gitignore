@@ -3,3 +3,6 @@
 MyDatabases.prop
 
 
+/nbproject/private/
+/build/
+/dist/
